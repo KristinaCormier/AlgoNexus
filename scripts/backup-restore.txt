@@ -1,0 +1,11 @@
+Bash scripts:
+
+-- Backup / Export Database:
+
+pg_dump kcor_db > backup.sql
+
+
+
+-- Restore Database:
+
+psql kcor_db < backup.sql

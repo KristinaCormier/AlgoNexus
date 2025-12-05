@@ -1,0 +1,4 @@
+Database Configuration:
+
+The database configuration process begins with creating a DRAC account, followed by obtaining a sponsor invitation to access the DRAC project and its associated resources. Once access is granted, an SSH key must be generated to enable connectivity to Fir through DRAC, and Multifactor Authentication (MFA) should be enabled and configured to secure the account. After these steps, a request is submitted to enable the required DRAC resources, and an email is sent to the DRAC team to provision a database on Fir. When DRAC confirms that the requested database has been created, a new server group and server—configured with the appropriate password—can then be set up in pgAdmin to allow direct access to the database.
+

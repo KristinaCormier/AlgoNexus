@@ -1,0 +1,76 @@
+-- Common SQL queries
+
+
+-- Check Number of Tables in a Schema
+SELECT COUNT(*) AS table_count
+FROM information_schema.tables
+WHERE table_schema = 'market' 
+AND table_type = 'BASE TABLE';
+
+
+-- List All Tables in a Schema
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'your_schema';
+
+
+-- List All Columns in a Table
+SELECT column_name, data_type, is_nullable
+FROM information_schema.columns
+WHERE table_name = 'modelfeatures';
+
+
+-- Check Database Size
+SELECT pg_size_pretty(pg_database_size(current_database()));
+
+
+-- List Indexes on a Table
+SELECT indexname, indexdef
+FROM pg_indexes
+WHERE tablename = 'modelfeatures';
+
+
+-- Find Missing or Unused Indexes
+SELECT c.relname AS index_name,
+       ui.idx_scan AS times_used
+FROM pg_stat_user_indexes ui
+JOIN pg_class c ON c.oid = ui.indexrelid
+WHERE ui.idx_scan = 0;
+
+
+-- Find Missing or Unused Indexes (Including Table Name)
+SELECT
+    idx.relname AS index_name,
+    tbl.relname AS table_name,
+    ui.idx_scan AS times_used
+FROM pg_stat_user_indexes ui
+JOIN pg_class idx ON idx.oid = ui.indexrelid
+JOIN pg_class tbl ON tbl.oid = ui.relid
+WHERE ui.idx_scan = 0;
+
+
+-- Show Active Connections
+SELECT pid, usename, client_addr, state, query
+FROM pg_stat_activity;
+
+
+-- Identify Long-Running Queries
+SELECT pid, now() - pg_stat_activity.query_start AS duration, query
+FROM pg_stat_activity
+WHERE state = 'active'
+ORDER BY duration DESC;
+
+
+-- Check Row Count in Every Table
+SELECT relname AS table,
+       n_live_tup AS row_count
+FROM pg_stat_user_tables
+ORDER BY row_count DESC;
+
+
+-- Check Query Execution Plan
+EXPLAIN SELECT * FROM market.modelfeatures;
+
+
+-- Check Query Execution Plan with performance details
+EXPLAIN ANALYZE SELECT * FROM market.modelfeatures;
