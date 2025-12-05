@@ -1,0 +1,13 @@
+Database Explanation
+
+The database for this project is deployed on the Digital Research Alliance of Canada’s Fir server, using a managed PostgreSQL instance to support large-scale financial data storage and machine learning workflows. This environment provides secure access, high computational capacity, and the stability required for processing large time-series datasets used in algorithmic trading.
+
+A total of 517 individual tables were created—one for each company in the S&P 500 index (including three additional related symbols). Each table stores two years of historical intraday market data retrieved from the Financial Modeling Prep (FMP) API. Data was collected at 5-minute intervals and then aggregated to 15-minute intervals to reduce noise, improve data quality, and create a more stable dataset for modeling and backtesting.
+
+To enhance the database structure and analytical capabilities, two additional supporting tables were added:
+
+Sector Table – This table provides a sector classification for each S&P 500 company. It enables grouped analysis, sector-level performance tracking, and the development of sector-specific trading strategies.
+
+ModelFeatures Table – This table stores engineered features generated for machine learning models. It includes indicators, statistical summaries, and derived metrics used to train predictive algorithms. Separating these engineered features into their own table ensures a clean, scalable database design that supports iterative model development.
+
+By utilizing DRAC’s Fir environment combined with PostgreSQL, the project benefits from a secure, high-performance infrastructure capable of handling hundreds of tables, large volumes of time-series data, and ongoing algorithmic trading experimentation.
